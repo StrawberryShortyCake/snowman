@@ -23,23 +23,26 @@ import img6 from "./6.png";
  */
 
 function Snowman({
-      images=[img0, img1, img2, img3, img4, img5, img6],
-      words=["apple"],
-      maxWrong=6,
-    }) {
+  images = [img0, img1, img2, img3, img4, img5, img6],
+  words = ["apple"],
+  maxWrong = 6,
+}) {
   /** by default, allow 6 guesses and use provided gallows images. */
 
   const [nWrong, setNWrong] = useState(0);
   const [guessedLetters, setGuessedLetters] = useState(() => new Set());
   const [answer, setAnswer] = useState((words)[0]);
 
+  const endGame = nWrong === maxWrong;
+  console.log("snowman", nWrong, maxWrong, endGame);
+
   /** guessedWord: show current-state of word:
    if guessed letters are {a,p,e}, show "app_e" for "apple" TODO: this needs to be extracted
    */
   function guessedWord() {
     return answer
-        .split("")
-        .map(ltr => (guessedLetters.has(ltr) ? ltr : "_"));
+      .split("")
+      .map(ltr => (guessedLetters.has(ltr) ? ltr : "_"));
   }
 
   /** handleGuess: handle a guessed letter:
@@ -58,31 +61,36 @@ function Snowman({
     });
 
     setNWrong(n => n + (answer.includes(ltr) ? 0 : 1));
+
+    console.log("endgame status", endGame);
   }
 
   /** generateButtons: return array of letter buttons to render */
   function generateButtons() {
     return "abcdefghijklmnopqrstuvwxyz".split("").map(ltr => (
-        <button
-            key={ltr}
-            id={ltr}
-            value={ltr}
-            onClick={handleGuess}
-            disabled={guessedLetters.has(ltr)}
-        >
-          {ltr}
-        </button>
+      <button
+        key={ltr}
+        id={ltr}
+        value={ltr}
+        onClick={handleGuess}
+        disabled={guessedLetters.has(ltr)}
+      >
+        {ltr}
+      </button>
     ));
   }
 
   return (
-      <div className="Snowman">
-        <img src={(images)[nWrong]} alt={nWrong} />
-        <b className="Snowman-wrong-count">Number wrong: {nWrong}</b>
-        <p className="Snowman-word">{guessedWord()}</p>
-        <p className="Snowman-buttons">{generateButtons()}</p>
-        <p className="Snowman-endgame" style={{display:'none'}}>You lose</p>
-      </div>
+    <div className="Snowman">
+      <img src={(images)[nWrong]} alt={nWrong} />
+      <b className="Snowman-wrong-count">Number wrong: {nWrong}</b>
+      <p className="Snowman-word">{guessedWord()}</p>
+      {endGame
+        ? <p className="Snowman-endgame">You lose</p>
+        : <p className="Snowman-buttons"> {generateButtons()}</p>
+      }
+
+    </div>
   );
 }
 
