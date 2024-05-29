@@ -65,6 +65,7 @@ function Snowman({
     return "abcdefghijklmnopqrstuvwxyz".split("").map(ltr => (
         <button
             key={ltr}
+            id={ltr}
             value={ltr}
             onClick={handleGuess}
             disabled={guessedLetters.has(ltr)}
@@ -80,7 +81,7 @@ function Snowman({
         <b className="Snowman-wrong-count">Number wrong: {nWrong}</b>
         <p className="Snowman-word">{guessedWord()}</p>
         <p className="Snowman-buttons">{generateButtons()}</p>
-        <p className="Snowman-endgame" style={display=hidden}>You lose</p>
+        <p className="Snowman-endgame" style={{display:'none'}}>You lose</p>
       </div>
   );
 }

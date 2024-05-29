@@ -13,12 +13,12 @@ it("end game condition for losing is shown", function(){
 
     const { container } = render(<Snowman maxWrong="3" />)
 
-    fireEvent.click(container.querySelector("#w"));
-    fireEvent.click(container.querySelector("#x"));
-    fireEvent.click(container.querySelector("#y"));
-    fireEvent.click(container.querySelector("#z"));
+    for (let ltr of ["w","x","y","z"]){
+        const button = container.querySelector(`#${ltr}`)
+        fireEvent.click(button);
+    }
 
-    expect.container.querySelector("Snowman-buttons").not.toBeInTheDocument()
-    expect.container.querySelector('img[alt=TEST_IMAGES[2]').toBeInTheDocument() //FIXME: to add images
-    expect.container.querySelector('Snowman-endgame').toBeInTheDocument()
+    expect(container.querySelector(".Snowman-buttons")).not.toBeInTheDocument()
+    expect(container.querySelector('img[alt="2"]')).toBeInTheDocument() //FIXME: to add images
+    expect(container.querySelector('.Snowman-endgame').style.display).not.toEqual('none')
 })
