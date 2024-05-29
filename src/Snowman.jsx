@@ -34,7 +34,7 @@ function Snowman({
   const [answer, setAnswer] = useState((words)[0]);
 
   /** guessedWord: show current-state of word:
-   if guessed letters are {a,p,e}, show "app_e" for "apple"
+   if guessed letters are {a,p,e}, show "app_e" for "apple" TODO: this needs to be extracted
    */
   function guessedWord() {
     return answer
@@ -44,10 +44,12 @@ function Snowman({
 
   /** handleGuess: handle a guessed letter:
    - add to guessed letters
-   - if not in answer, increase number-wrong guesses
+   - if not in answer, increase number-wrong guesses TODO: this can be partially extracted
    */
   function handleGuess(evt) {
     let ltr = evt.target.value;
+
+    // if condition set html element disabled = true if nWrong > 6
 
     setGuessedLetters(g => {
       const newGuessed = new Set(g);
@@ -75,8 +77,10 @@ function Snowman({
   return (
       <div className="Snowman">
         <img src={(images)[nWrong]} alt={nWrong} />
+        <b className="Snowman-wrong-count">Number wrong: {nWrong}</b>
         <p className="Snowman-word">{guessedWord()}</p>
-        <p>{generateButtons()}</p>
+        <p className="Snowman-buttons">{generateButtons()}</p>
+        <p className="Snowman-endgame" style={display=hidden}>You lose</p>
       </div>
   );
 }
