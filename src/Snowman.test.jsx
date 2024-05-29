@@ -3,7 +3,7 @@ import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import Snowman from "./Snowman";
 
-// import TEST_IMAGES from "./_testCommon.js";
+import TEST_IMAGES from "./_testCommon.js";
 
 // Image shouldn't disappear
 // Buttons disappear
@@ -11,9 +11,12 @@ import Snowman from "./Snowman";
 
 it("end game condition for losing is shown", function () {
 
-    const { container, debug } = render(<Snowman word="apple" maxWrong={3} />);
-
-    debug(container);
+    const { container } = render(
+        <Snowman
+            images={TEST_IMAGES}
+            word="apple"
+            maxWrong={3}
+         />);
 
     for (let ltr of ["x", "y", "z"]) {
         const button = container.querySelector(`#${ltr}`);
@@ -21,6 +24,6 @@ it("end game condition for losing is shown", function () {
     }
 
     expect(container.querySelector('.Snowman-buttons')).not.toBeInTheDocument();
-    // expect(container.querySelector('img[alt="2"]')).toBeInTheDocument(); //FIXME: to add images
+    expect(container.querySelector('img').alt).toEqual("3");
     expect(container.querySelector('.Snowman-endgame').style.display).not.toEqual('none');
 });
