@@ -29,12 +29,13 @@ function Snowman({
 }) {
   /** by default, allow 6 guesses and use provided gallows images. */
 
+  console.log("WORD", words);
   const [nWrong, setNWrong] = useState(0);
   const [guessedLetters, setGuessedLetters] = useState(() => new Set());
   const [answer, setAnswer] = useState((words)[0]);
 
   const endGame = nWrong === maxWrong;
-  console.log("snowman", nWrong, maxWrong, endGame);
+
 
   /** guessedWord: show current-state of word:
    if guessed letters are {a,p,e}, show "app_e" for "apple" TODO: this needs to be extracted
@@ -61,8 +62,6 @@ function Snowman({
     });
 
     setNWrong(n => n + (answer.includes(ltr) ? 0 : 1));
-
-    console.log("endgame status", endGame);
   }
 
   /** generateButtons: return array of letter buttons to render */
