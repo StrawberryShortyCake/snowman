@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { randomWord } from "./words.js";
 import "./Snowman.css";
 import img0 from "./0.png";
 import img1 from "./1.png";
@@ -29,10 +30,9 @@ function Snowman({
 }) {
   /** by default, allow 6 guesses and use provided gallows images. */
 
-  console.log("WORD", words);
   const [nWrong, setNWrong] = useState(0);
   const [guessedLetters, setGuessedLetters] = useState(() => new Set());
-  const [answer, setAnswer] = useState((words)[0]);
+  const [answer, setAnswer] = useState(randomWord(words));
 
   const endGame = nWrong === maxWrong;
 
